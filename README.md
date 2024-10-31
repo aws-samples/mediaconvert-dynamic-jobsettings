@@ -62,8 +62,8 @@ npx cdk deploy
 ### Output
 
 This will output the following AWS resources:
-- `video-transcoding-source-<aws-account-number>` S3 Bucket: where the video files are uploaded and transcoded.
--	`video-transcoding-destination-<aws-account-number>` S3 Bucket: where the video files are sent after transcoding.
+- `mediaconvertstack-videotranscodingsourceXXXXX` S3 Bucket: where the video files are uploaded and transcoded.
+-	`mediaconvertstack-videotranscodingdestinationXXXXX` S3 Bucket: where the video files are sent after transcoding.
 -	mediaConvert Elemental Media Job Queue: This is where Java application submits the media convert job to.
 -	mediaConvert IAM Role: Role and the IAM permissions required for the AWS Elemental MediaConvert service to run the job needed for read and write permissions to source and destination buckets.
 
@@ -75,14 +75,14 @@ This will output the following AWS resources:
 	- Navigate to Amazon S3 service -> bucket starts with the string `mediaconvertstack-videotranscodingsource` and upload the sample files `SampleVideo-ZeroAudioTrack.mov`, `SampleVideo-SingleAudioTrack.mp4` and `SampleVideo-MultiAudioTrack.mov` using `Upload` button.
 	- It should be as below
 ![source-bucket-files.png](source-bucket-files.png)
-- Update the [config.properties](service/test/src/test/resources/config.properties) file with values for `region`, `mcRoleArn`, `mcQueueArn`, `sourceBucket` and `destinationBucket` obtained from [Deploy step](#output)
+- Update the [config.properties](service/src/test/resources/config.properties) file with values for `region`, `mcRoleArn`, `mcQueueArn`, `sourceBucket` and `destinationBucket` obtained from [Deploy step](#output)
 - Run MCDynamicAudioTest class to start transcoding of the files present in the bucket that starts with `mediaconvertstack-videotranscodingsource` S3 Bucket.  This will run the Dynamic Media Service to dynamically configure the number of audio tracks
 ```
 cd ../service
 mvn test
 ```
 ### Job Ids
-Expected output when the tests have successfully been run
+Expected output when the tests have been successfully run
 ```
 Media Convert Job Id xxxxxxxxx-68qrfl
 Test CreateJob passed
