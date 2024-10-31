@@ -34,15 +34,12 @@ This repository contains both the service used for Java Media Convert Service an
 ```
 git clone <<repository url>>
 ```
-- On Terminal window navigate to cdk folder and run the following commands.
+- On Terminal window navigate to cdk folder and install CDK dependencies
 ```
 cd cdk
-```
-- Install CDK dependencies 
-```
 npm install
 ```
-- Export environment variables
+- Export environment variables required for the CDK stack
 ```
 export AWS_REGION=<<region>>
 export AWS_ACCOUNT=<<account>>
@@ -62,10 +59,10 @@ npx cdk deploy
 ### Output
 
 This will output the following AWS resources:
-- `mediaconvertstack-videotranscodingsourceXXXXX` S3 Bucket: where the video files are uploaded and transcoded.
--	`mediaconvertstack-videotranscodingdestinationXXXXX` S3 Bucket: where the video files are sent after transcoding.
--	mediaConvert Elemental Media Job Queue: This is where Java application submits the media convert job to.
--	mediaConvert IAM Role: Role and the IAM permissions required for the AWS Elemental MediaConvert service to run the job needed for read and write permissions to source and destination buckets.
+- MediaConvertStack.SourceBucketName: S3 Bucket where the video files are uploaded and transcoded.
+-	MediaConvertStack.DestinationBucketName: S3 Bucket where the video files are sent after transcoding.
+-	MediaConvertStack.MediaConvertJobQueueArn: MediaConvert Elemental Media Job Queue Arn where Java application submits the media convert job to.
+-	MediaConvertStack.MediaConvertRoleArn : AWS IAM Role Arn required for the AWS Elemental MediaConvert service to run the job needed for read and write permissions to source and destination buckets.
 
 ## Testing
 - Download sample video files ([file_example_MOV_1280_1_4MB.mov](https://file-examples.com/storage/fee7a7e285671bd4a9d4d9d/2018/04/file_example_MOV_1280_1_4MB.mov), [1080i60_SMPTE_8CH_audible.mov](https://drive.google.com/file/d/1n2MieRbulM1AvM5AUfteRpKy2S2b5I4F/view) and [2122934-hd_1920_1080_30fps.mp4](https://www.pexels.com/video/wind-chime-hanging-on-a-tree-2122934/)) required for testing the service.
@@ -104,7 +101,7 @@ Test CreateJob passed
 ## Cleanup
 To delete the stack and all associated resources, run below command.
 
-Note: The S3 buckets for both the source and destination have removalPolicy configured. As a result, when the MediaConvertStack.ts stack is destroyed, all files and buckets will be automatically deleted.
+Note: The S3 buckets for both the source and destination have removalPolicy configured. As a result, when the MediaConvertStack is destroyed, all files and buckets will be automatically deleted.
 
 Navigate to `cdk` folder on terminal window and run the following command.
 ```
